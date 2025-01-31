@@ -32,13 +32,13 @@ const getStudent = async (req, res) => {
 
 const createStudent = async (req, res) => {
     try{
-        let rowsAffected = await studentService.createStudent(req.body);
-        if(rowsAffected.rowCount > 0){
-            res.status(201).send("Record added successfully");
+        const {password} = req.body; 
+        const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,15}$/;
+        if(!regex.test(password)){
+            res.status(400).send("Password should contain atleast one upper case, one lower case, one special charactor, one digit. Password length sjould be 8 to 15 charector");
         }
-        else{
-            res.status(501).send("Error in adding record into database");
-        }
+        await studentService.createStudent(req.body);
+        res.status(201).send("Record added successfully");
     }
     catch(err){
         res.status(err?.status || 500).send(err?.message || "Internal server error");
