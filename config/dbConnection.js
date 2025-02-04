@@ -1,7 +1,6 @@
 const {Pool} = require('pg');
 const  { drizzle } = require('drizzle-orm/node-postgres');
 const dotenv = require('dotenv');
-const req = require('express/lib/request');
 dotenv.config();
 
 const pool = new Pool({
@@ -22,4 +21,4 @@ const query = (q, params = []) => {
     return pool.query(q, params)
 }
 
-module.exports = {query, db};
+module.exports = {db};
