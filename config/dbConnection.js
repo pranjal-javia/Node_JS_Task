@@ -1,4 +1,5 @@
 const {Pool} = require('pg');
+const  { drizzle } = require('drizzle-orm/node-postgres');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -14,16 +15,10 @@ pool.on('connect', () => {
     console.log("Database connected");
 });
 
-pool.on('release', () => {
-    console.log("release");
-})
-
-pool.on('remove', () => {
-    console.log("remove");
-})
+const db = drizzle({ client: pool })
 
 const query = (q, params = []) => {
     return pool.query(q, params)
 }
 
-module.exports = {query};
+module.exports = {db};

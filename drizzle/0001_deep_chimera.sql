@@ -1,0 +1,1 @@
+ALTER TABLE "student" ADD COLUMN "projectTitle" varchar(255) NOT NULL;
