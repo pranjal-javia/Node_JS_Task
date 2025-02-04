@@ -1,1 +1,0 @@
-ALTER TABLE "student" ALTER COLUMN "email" DROP NOT NULL;
