@@ -1,10 +1,12 @@
 const studentService = require("../services/studentServices");
+// const z = require("zod");
+const {creat_student_ZOD_schema, update_student_ZOD_schema, delete_student_ZOD_schema} = require("../validations/studentValidations");
 
 const getAllStudents = async (req, res) => {
     try{
         const students = await studentService.getAllStudents();
-        if(students.rowCount > 0){
-            res.status(200).send(students.rows);
+        if(students.length > 0){
+            res.status(200).send(students);
         }
         else{
             res.status(404).send("No students found");
@@ -18,8 +20,8 @@ const getAllStudents = async (req, res) => {
 const getStudent = async (req, res) => {
     try{
         const student = await studentService.getStudent(req.body.name);
-        if(student.rowCount > 0){
-            res.status(200).send(student.rows);
+        if(student.length > 0){
+            res.status(200).send(student);
         }
         else{
             res.status(404).send("Student not found");
@@ -32,10 +34,9 @@ const getStudent = async (req, res) => {
 
 const createStudent = async (req, res) => {
     try{
-        const {password} = req.body; 
-        const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,15}$/;
-        if(!regex.test(password)){
-            res.status(400).send("Password should contain atleast one upper case, one lower case, one special charactor, one digit. Password length sjould be 8 to 15 charector");
+        const validation = creat_student_ZOD_schema.safeParse(req.body); 
+        if(!validation.success){
+            return res.status(400).json({errors: validation.error.format()});
         }
         await studentService.createStudent(req.body);
         res.status(201).send("Record added successfully");
@@ -45,11 +46,21 @@ const createStudent = async (req, res) => {
     }
 }
 
-const updatedStudent = async (req, res) => {
+const updateStudent = async (req, res) => {
     try{
-        let rowsAffected = await studentService.updatedStudent(req.body);
+        // const student = z.object({
+        //     name: z.string().min(1, "Name is required"),
+        //     address: z.string().min(1, "Name is required"),
+        //     collage: z.string().min(1, "Collage name is required"),
+        //     branch: z.string().min(1, "Branch name is required"),
+        // });
+        const validation = update_student_ZOD_schema.safeParse(req.body);
+        if(!validation.success){
+            return res.status(400).json({errors: validation.error.format()});
+        }
+        const rowsAffected = await studentService.updatedStudent(req.body);
         if(rowsAffected.rowCount > 0){
-            res.status(204).send("Record updated successfully");
+            res.status(204).send();
         }
         else{
             res.status(404).send("User not found");
@@ -62,9 +73,16 @@ const updatedStudent = async (req, res) => {
 
 const deleteStudent = async (req, res) => {
     try{
-        let rowsAffected = await studentService.deleteStudent(req.body.name);
+        // const student = z.object({
+        //     name: z.string().min(1, "Name is required."),
+        // });
+        const validation = delete_student_ZOD_schema.safeParse(req.body);
+        if(!validation.success){
+            return res.status(400).json({errors: validation.error.format()});
+        }
+        const rowsAffected = await studentService.deleteStudent(req.body.name);
         if(rowsAffected.rowCount > 0){
-            res.status(204).send("Record deleted successfully");
+            res.status(204).send();
         }
         else{
             res.status(404).send("Student not found");
@@ -79,6 +97,6 @@ module.exports = {
     getAllStudents,
     createStudent,
     getStudent,
-    updatedStudent,
+    updateStudent,
     deleteStudent
 }

@@ -17,7 +17,9 @@
     "express": "^4.21.2",
     "nodemon": "^3.1.9",
     "pg": "^8.13.1",
-    "uuid": "^11.0.5"
+    "uuid": "^11.0.5",
+    "zod": "^3.24.1",
+    "zod-validation-error": "^3.4.0"
   },
   "devDependencies": {
     "@types/pg": "^8.11.11",

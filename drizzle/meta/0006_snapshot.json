@@ -1,6 +1,6 @@
 {
-  "id": "b11cb987-36ab-4106-bbb4-3754103f413f",
-  "prevId": "ad1e34af-e77a-4cec-b780-1647f7fa873f",
+  "id": "f7a600a9-a0f4-4fd9-9bcf-29c644357902",
+  "prevId": "b11cb987-36ab-4106-bbb4-3754103f413f",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -144,12 +144,6 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
-        },
-        "projectTitle": {
-          "name": "projectTitle",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
         }
       },
       "indexes": {},

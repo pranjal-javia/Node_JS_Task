@@ -1,15 +1,15 @@
 {
-  "id": "887f1094-5203-43bf-a384-6504112e1832",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "13f5faa7-69d0-4798-a30c-443296bf72e1",
+  "prevId": "0ddc9dc2-d426-48b9-9897-5fd8a6aa3922",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.student": {
-      "name": "student",
+    "public.mentore": {
+      "name": "mentore",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
+        "mentorId": {
+          "name": "mentorId",
           "type": "serial",
           "primaryKey": true,
           "notNull": true
@@ -18,6 +18,89 @@
           "name": "email",
           "type": "varchar(255)",
           "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.mentore_asigned": {
+      "name": "mentore_asigned",
+      "schema": "",
+      "columns": {
+        "asignId": {
+          "name": "asignId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "studentId": {
+          "name": "studentId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mentorId": {
+          "name": "mentorId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "mentore_asigned_studentId_student_studentId_fk": {
+          "name": "mentore_asigned_studentId_student_studentId_fk",
+          "tableFrom": "mentore_asigned",
+          "tableTo": "student",
+          "columnsFrom": [
+            "studentId"
+          ],
+          "columnsTo": [
+            "studentId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "mentore_asigned_mentorId_mentore_mentorId_fk": {
+          "name": "mentore_asigned_mentorId_mentore_mentorId_fk",
+          "tableFrom": "mentore_asigned",
+          "tableTo": "mentore",
+          "columnsFrom": [
+            "mentorId"
+          ],
+          "columnsTo": [
+            "mentorId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.student": {
+      "name": "student",
+      "schema": "",
+      "columns": {
+        "studentId": {
+          "name": "studentId",
+          "type": "serial",
+          "primaryKey": true,
           "notNull": true
         },
         "name": {
@@ -34,9 +117,9 @@
         },
         "address": {
           "name": "address",
-          "type": "text",
+          "type": "varchar(100)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "collage": {
           "name": "collage",
@@ -49,20 +132,24 @@
           "type": "varchar(50)",
           "primaryKey": false,
           "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "projectTitle": {
+          "name": "projectTitle",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "student_email_unique": {
-          "name": "student_email_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
-        }
-      },
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

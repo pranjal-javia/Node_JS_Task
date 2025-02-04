@@ -1,15 +1,15 @@
 {
-  "id": "6df6224a-4483-4c8c-8b36-ebd57cae2956",
-  "prevId": "b0673ab0-4301-4e87-8a43-bfdcbe0a6f10",
+  "id": "ad1e34af-e77a-4cec-b780-1647f7fa873f",
+  "prevId": "814e1556-4156-440c-a175-1ae88e242556",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.student": {
-      "name": "student",
+    "public.mentore": {
+      "name": "mentore",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
+        "mentorId": {
+          "name": "mentorId",
           "type": "serial",
           "primaryKey": true,
           "notNull": true
@@ -18,8 +18,96 @@
           "name": "email",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true,
-          "default": "'abc@gmail.com'"
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.mentore_asigned": {
+      "name": "mentore_asigned",
+      "schema": "",
+      "columns": {
+        "asignId": {
+          "name": "asignId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "studentId": {
+          "name": "studentId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mentorId": {
+          "name": "mentorId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "mentore_asigned_studentId_student_studentId_fk": {
+          "name": "mentore_asigned_studentId_student_studentId_fk",
+          "tableFrom": "mentore_asigned",
+          "tableTo": "student",
+          "columnsFrom": [
+            "studentId"
+          ],
+          "columnsTo": [
+            "studentId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "mentore_asigned_mentorId_mentore_mentorId_fk": {
+          "name": "mentore_asigned_mentorId_mentore_mentorId_fk",
+          "tableFrom": "mentore_asigned",
+          "tableTo": "mentore",
+          "columnsFrom": [
+            "mentorId"
+          ],
+          "columnsTo": [
+            "mentorId"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.student": {
+      "name": "student",
+      "schema": "",
+      "columns": {
+        "studentId": {
+          "name": "studentId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
         },
         "name": {
           "name": "name",
@@ -35,9 +123,9 @@
         },
         "address": {
           "name": "address",
-          "type": "text",
+          "type": "varchar(100)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "collage": {
           "name": "collage",
@@ -50,6 +138,12 @@
           "type": "varchar(50)",
           "primaryKey": false,
           "notNull": false
+        },
+        "projectTitle": {
+          "name": "projectTitle",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
